@@ -1,0 +1,25 @@
+# This is a basic workflow to help you get started with Actions
+name: CI
+# Controls when the action will run. Triggers the workflow on push or pull request events but only for the master branch
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/master' # Only run this job if it is on the master branch
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: master # Checkout out master instead of the latest commit
+          fetch-depth: 0 # Checkout the whole branch
+      - uses: mhanberg/gigalixir-action@v0.3.0
+        with:
+          GIGALIXIR_USERNAME: ${{ secrets.GIGALIXIR_USERNAME }}
+          GIGALIXIR_PASSWORD: ${{ secrets.GIGALIXIR_PASSWORD }}
+          GIGALIXIR_APP: firsthand-personal-skipper # Feel free to also put this in your secrets
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          MIGRATIONS: false # defaults to true
