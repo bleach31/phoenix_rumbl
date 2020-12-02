@@ -9,12 +9,12 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   deploy:
-    if: github.ref == 'refs/heads/master' # Only run this job if it is on the master branch
+    if: github.ref == 'refs/heads/main' # Only run this job if it is on the master branch
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: master # Checkout out master instead of the latest commit
+          ref: main # Checkout out master instead of the latest commit
           fetch-depth: 0 # Checkout the whole branch
       - uses: mhanberg/gigalixir-action@v0.3.0
         with:
