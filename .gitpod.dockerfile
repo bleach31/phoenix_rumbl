@@ -7,7 +7,7 @@ RUN sudo apt update
 RUN sudo apt install -y git nano wget curl
 
 # install elixir 1.8.0
-RUN wget https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb && dpkg -i erlang-solutions_2.0_all.deb
+RUN wget https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb && sudo dpkg -i erlang-solutions_2.0_all.deb
 RUN sudo apt update
 RUN sudo apt install -y esl-erlang
 RUN sudo apt install -y elixir=1.8.0-1
