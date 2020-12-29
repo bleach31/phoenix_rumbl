@@ -1,7 +1,7 @@
 FROM gitpod/workspace-postgres
 # phoenix book is postgres 8, but we use 10 for easy instalation python 3.5
 # Because gigalixir requreieds python 3.5 ( or greater)
-ARG DEBIAN_FRONTEND=noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 # install basic software
 RUN sudo apt update
