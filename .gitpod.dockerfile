@@ -3,6 +3,14 @@ FROM gitpod/workspace-postgres
 # Because gigalixir requreieds python 3.5 ( or greater)
 ARG DEBIAN_FRONTEND=noninteractive
 
+USER gitpod
+# Set debconf to noninteractive mode.
+RUN echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections
+# Install custom tools, runtime, etc. using apt-get
+#
+# More information: https://www.gitpod.io/docs/config-docker/
+USER root
+
 # install basic software
 RUN sudo apt update
 RUN sudo env="DEBIAN_FRONTEND=noninteractive" apt install -y git nano wget curl
@@ -41,3 +49,9 @@ ENV PATH ~/.local/bin:$PATH
 
 # install inotify-tools
 RUN sudo apt install -y inotify-tools
+
+
+
+# Set debconf back to normal.
+USER gitpod
+RUN echo 'debconf debconf/frontend select Dialog' | sudo debconf-set-selections
