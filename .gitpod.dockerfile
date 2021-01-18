@@ -1,17 +1,17 @@
 FROM gitpod/workspace-postgres
 # phoenix book is postgres 8, but we use 10 for easy instalation python 3.5
 # Because gigalixir requreieds python 3.5 ( or greater)
-ENV DEBIAN_FRONTEND=noninteractive
+ARG DEBIAN_FRONTEND=noninteractive
 
 # install basic software
 RUN sudo apt update
-RUN sudo apt install -y git nano wget curl
+RUN sudo env="DEBIAN_FRONTEND=noninteractive" apt install -y git nano wget curl
 
 # install elixir 1.8.0
 RUN wget https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb && sudo dpkg -i erlang-solutions_2.0_all.deb
 RUN sudo apt update
-RUN sudo apt install -y esl-erlang
-RUN sudo apt install -y elixir=1.8.0-1
+RUN sudo env="DEBIAN_FRONTEND=noninteractive" apt install -y esl-erlang
+RUN sudo env="DEBIAN_FRONTEND=noninteractive" apt install -y elixir=1.8.0-1
 
 # install phoenix 1.4.7
 RUN mix local.hex --force
@@ -20,7 +20,7 @@ RUN mix archive.install hex phx_new 1.4.7 --force
 # install node 5.3.0 -> 10.23.0
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -;
 RUN sudo apt update
-RUN sudo apt install -y nodejs
+RUN sudo env="DEBIAN_FRONTEND=noninteractive" apt install -y nodejs
 RUN npm install n -g
 RUN n 10.23.0
 RUN sudo apt purge -y nodejs
