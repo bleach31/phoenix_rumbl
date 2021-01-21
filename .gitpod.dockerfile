@@ -15,22 +15,11 @@ USER root
 RUN sudo apt update
 RUN sudo env="DEBIAN_FRONTEND=noninteractive" apt install -y git nano wget curl
 
-RUN cd
-RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.7.4
-RUN echo '. $HOME/.asdf/asdf.sh' >> ~/.bashrc
-RUN echo '. $HOME/.asdf/completions/asdf.bash' >> ~/.bashrc
-RUN asdf plugin-add erlang
-RUN asdf plugin-add elixir
-RUN asdf install erlang 22.3.4.13
-RUN asdf install elixir 1.8.0-1
-RUN asdf global erlang 22.3.4.13
-RUN asdf global elixir 1.8.0-1
-
 # install elixir 1.8.0
-# RUN wget https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb && sudo dpkg -i erlang-solutions_2.0_all.deb
-# RUN sudo apt update
-# RUN sudo env="DEBIAN_FRONTEND=noninteractive" apt install -y esl-erlang
-# RUN sudo env="DEBIAN_FRONTEND=noninteractive" apt install -y elixir=1.8.0-1
+RUN wget https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb && sudo dpkg -i erlang-solutions_2.0_all.deb
+RUN sudo apt update
+RUN sudo env="DEBIAN_FRONTEND=noninteractive" apt install -y esl-erlang
+RUN sudo env="DEBIAN_FRONTEND=noninteractive" apt install -y elixir
 
 # install phoenix 1.4.7
 RUN mix local.hex --force
