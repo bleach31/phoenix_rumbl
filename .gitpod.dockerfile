@@ -51,9 +51,11 @@ ENV PATH ~/.local/bin:$PATH
 RUN sudo apt install -y inotify-tools
 
 # prepare To start your Phoenix server
-RUN mix deps.get
-RUN cd assets && npm install
+# RUN mix deps.get
+# RUN cd assets && npm install
 
 # Set debconf back to normal.
 USER gitpod
 RUN echo 'debconf debconf/frontend select Dialog' | sudo debconf-set-selections
+
+USER root
