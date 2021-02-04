@@ -50,7 +50,9 @@ ENV PATH ~/.local/bin:$PATH
 # install inotify-tools
 RUN sudo apt install -y inotify-tools
 
-
+# prepare To start your Phoenix server
+RUN mix deps.get
+RUN cd assets && npm install
 
 # Set debconf back to normal.
 USER gitpod
