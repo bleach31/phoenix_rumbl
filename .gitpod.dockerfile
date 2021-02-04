@@ -26,7 +26,7 @@ RUN mix local.hex --force
 RUN mix archive.install hex phx_new 1.4.7 --force
 
 # install node 5.3.0 -> 10.23.0
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -;
+RUN curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -;
 RUN sudo apt update
 RUN sudo env="DEBIAN_FRONTEND=noninteractive" apt install -y nodejs
 RUN npm install n -g
