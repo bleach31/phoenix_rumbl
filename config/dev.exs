@@ -2,7 +2,7 @@ use Mix.Config
 
 # Configure your database
 config :rumbl, Rumbl.Repo,
-  username: "postgres",
+  username: "gitpod",
   password: "postgres",
   database: "rumbl_dev",
   hostname: "localhost",
