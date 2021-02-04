@@ -29,7 +29,7 @@ RUN mix archive.install hex phx_new 1.4.7 --force
 RUN curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -;
 RUN sudo apt update
 RUN sudo env="DEBIAN_FRONTEND=noninteractive" apt install -y nodejs
-RUN npm install n -g
+RUN sudo npm install n -g
 RUN n 10.23.0
 RUN sudo apt purge -y nodejs
 
