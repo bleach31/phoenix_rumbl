@@ -9,7 +9,7 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-sel
 # Install custom tools, runtime, etc. using apt-get
 #
 # More information: https://www.gitpod.io/docs/config-docker/
-USER root
+# USER root
 
 # install basic software
 RUN sudo apt update
@@ -57,5 +57,3 @@ RUN sudo apt install -y inotify-tools
 # Set debconf back to normal.
 USER gitpod
 RUN echo 'debconf debconf/frontend select Dialog' | sudo debconf-set-selections
-
-USER root
