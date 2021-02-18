@@ -59,4 +59,4 @@ USER gitpod
 RUN echo 'debconf debconf/frontend select Dialog' | sudo debconf-set-selections
 
 # init elixir
-CMD  ["~/init.sh"]
+CMD  ["/workspace/phoenix_rumbl/init.sh"]

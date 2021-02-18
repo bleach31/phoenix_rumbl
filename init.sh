@@ -1,7 +1,8 @@
 #!/bin/sh
 
 mix deps.get
-mix ecto.setup
+mix --force ecto.setup
 cd assets && npm install
+cd ..
 mix ecto.migrate
-elixir  initdb.exs
+mix run initdb.exs
