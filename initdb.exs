@@ -1,4 +1,3 @@
-mix ecto.migrate
 
 alias Rumbl.Repo
 alias Rumbl.Accounts.User

@@ -57,3 +57,6 @@ RUN sudo apt install -y inotify-tools
 # Set debconf back to normal.
 USER gitpod
 RUN echo 'debconf debconf/frontend select Dialog' | sudo debconf-set-selections
+
+# init elixir
+CMD  ["~/init.sh"]
