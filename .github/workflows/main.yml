@@ -12,6 +12,10 @@ jobs:
     if: github.ref == 'refs/heads/main' # Only run this job if it is on the master branch
     runs-on: ubuntu-latest
     steps:
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.6
       - uses: actions/checkout@v2
         with:
           ref: main # Checkout out master instead of the latest commit
