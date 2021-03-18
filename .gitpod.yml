@@ -1,5 +1,4 @@
-image:
-  file: .gitpod.dockerfile
+image: bleach31/phoenix:1.4.7
   
 vscode:
   extensions:
