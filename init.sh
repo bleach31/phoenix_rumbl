@@ -1,7 +1,6 @@
 #!/bin/sh
-
+mix local.rebar --force
 mix deps.get
-mix --force ecto.setup
 cd assets && npm install
 cd ..
 mix ecto.setup
