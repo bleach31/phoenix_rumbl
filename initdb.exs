@@ -3,7 +3,7 @@ alias Rumbl.Accounts.User
 
 Repo.insert(%User{
 name: "José",
-sername: "josevalim",
+username: "josevalim",
 password_hash: "$pbkdf2-sha512$160000$ZslaZ4l.6VEIb3AO0bfpNg$dLUG1Tmx0ZVDO2fbJYEB.Hj6rclV73ZrGo2JGuxbYCAS8Zv1ty8XDbudPGj0oULTYz54yG8WJwZEsrQ.FkVeUQ"
 })
 
