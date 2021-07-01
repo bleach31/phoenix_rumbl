@@ -4,3 +4,6 @@ image:
 vscode:
   extensions:
     - elixir-lsp.elixir-ls@0.6.2:j/OgOgkgo0QJRBdZXhmoUQ==
+
+ports:
+  - port: 4000-4010
