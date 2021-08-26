@@ -13,57 +13,23 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-sel
 # install basic software
 RUN sudo apt update
 RUN sudo env="DEBIAN_FRONTEND=noninteractive" apt install -y git nano wget curl
-
-# install elixir 1.8.0
-
-# RUN wget https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb && sudo dpkg -i erlang-solutions_2.0_all.deb
-# RUN sudo apt update
-# RUN sudo env="DEBIAN_FRONTEND=noninteractive" apt install -y esl-erlang
-# RUN sudo env="DEBIAN_FRONTEND=noninteractive" apt install -y elixir
-# RUN sudo apt update && sudo apt install -y build-essential git wget libssl-dev libreadline-dev libncurses5-dev zlib1g-dev m4 curl wx-common libwxgtk3.0-dev autoconf procps
-# RUN sudo apt update && sudo apt install -y build-essential git wget libssl-dev libreadline-dev libncurses5-dev zlib1g-dev m4 curl wx-common libgtk3.0-gtk3-dev autoconf procps
 RUN sudo apt update && sudo apt install -y build-essential git wget libssl-dev libreadline-dev libncurses5-dev zlib1g-dev m4 curl wx-common libwxgtk3.0-gtk3-dev autoconf procps
 
-USER root
+# install erlang 22 and elixir 1.8.0
 
-RUN useradd -ms $(which bash) asdf
-RUN gpasswd -a asdf sudo
+ENV PATH /home/gitpod/.asdf/bin:/home/gitpod/.asdf/shims:$PATH
 
-ENV PATH /home/asdf/.asdf/bin:/home/asdf/.asdf/shims:$PATH
-
-USER asdf
-RUN echo $HOME
-WORKDIR /home/asdf
-RUN usermod -d /home/asdf asdf
-ENV HOME=/home/asdf
-RUN echo $HOME
-RUN echo ~
-# asdf, erlang
-
-RUN /bin/bash -c "git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.2.1"
-RUN /bin/bash -c "asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git && \
-                  asdf install erlang 19.3 && \
-                  asdf global erlang 19.3 && \
+RUN /bin/bash -c "git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.1 && \
+                  asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git && \
+                  asdf install erlang 22.3 && \
+                  asdf global erlang 22.3 && \
                   rm -rf  /tmp/*"
 
+RUN /bin/bash -c "asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git && \
+                  asdf install elixir 1.8.0 && \
+                  asdf global elixir 1.8.0 && \
+                  rm -rf  /tmp/*"
 
-
-
-
-RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.1
-RUN sed -i '1i#!/bin/bash' $HOME/.asdf/asdf.sh
-RUN cat $HOME/.asdf/asdf.sh
-RUN . bash -c '$HOME/.asdf/asdf.sh'
-RUN . $HOME/.asdf/completions/asdf.bash
-RUN exec bash
-
-
-RUN asdf install erlang 22.3.4.20
-RUN asdf global erlang 22.3.4.20
-RUN asdf install elixir 1.8.0-otp-22
-RUN asdf global elixir 1.8.0-otp-22
-
-USER gitpod
 
 # install phoenix 1.4.7
 RUN mix local.hex --force
