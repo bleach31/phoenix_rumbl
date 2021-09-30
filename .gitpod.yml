@@ -10,5 +10,5 @@ ports:
 
 # Commands to start on workspace startup
 tasks:
-  - init: init DB and library
+  - name: init DB and library
     command: init.sh
