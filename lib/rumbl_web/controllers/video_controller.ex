@@ -4,6 +4,14 @@ defmodule RumblWeb.VideoController do
   alias Rumbl.Multimedia
   alias Rumbl.Multimedia.Video
 
+  plug :load_categories when action in [:new, :create, :edit, :update]
+
+  def load_categories(conn, _) do
+    # ここでアサインしたアトム？がhtml.eexからアクセスできるようになる
+    # :category555はhtml.eex側では@category555でアクセスできる
+    assign(conn, :categories555, Multimedia.list_alphabetical_categories())
+  end
+
   def action(conn, _) do
     args = [conn, conn.params, conn.assigns.current_user]
     apply(__MODULE__, action_name(conn), args)
