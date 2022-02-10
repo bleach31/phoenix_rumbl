@@ -43,7 +43,7 @@ defmodule Rumbl.Accounts.User do
     |> cast(attrs, [:name, :username])
     |> validate_required([:name, :username])
     |> validate_length(:username, min: 1, max: 20)
-    |> unique_constraint(:username)
+    |> unique_constraint(:username) # こいつを付けたところで何も起きない（逆に外すとエラーは確認できる）。ランディングページがない。
   end
 
 
