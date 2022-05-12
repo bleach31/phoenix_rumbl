@@ -8,12 +8,20 @@ defmodule RumblWeb.Auth do
 
   def call(conn, _opts) do
     user_id = get_session(conn, :user_id)
-    # &&演算子は、結果が真であれば右オペランドの値が返ってくる
-    # nil,false以外の値は真して、扱われる
-    # この場合、user_idが真なら、get_userの結果がuserに入る
-    user = user_id && Rumbl.Accounts.get_user(user_id)
 
-    assign(conn, :current_user, user)
+    cond do
+      conn.assigns[:current_user] ->
+        conn
+
+      # &&演算子は、結果が真であれば右オペランドの値が返ってくる
+      # nil,false以外の値は真して、扱われる
+      # この場合、user_idが真なら、get_userの結果がuserに入る
+      user = user_id && Rumbl.Accounts.get_user(user_id) ->
+        assign(conn, :current_user, user)
+
+      true ->
+        assign(conn, :current_user, nil)
+    end
   end
 
   def login(conn, user) do
