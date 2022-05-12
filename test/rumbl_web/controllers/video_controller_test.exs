@@ -15,7 +15,7 @@ defmodule RumblWeb.VideoControllerTest do
 
     {:ok, conn: conn, user: user}
   end
-
+  
   test "requires user authentication on all actions", %{conn: conn} do
     Enum.each([
       get(conn, Routes.video_path(conn, :new)),
