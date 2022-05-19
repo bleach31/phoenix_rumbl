@@ -9,13 +9,32 @@
 defmodule RumblWeb.VideoControllerTest do
   use RumblWeb.ConnCase, async: true
 
-  setup %{conn: conn, login_as: username} do
-    user = user_fixture(username: username)
-    conn = assign(conn, :current_user, user)
+  describe "with a logged-in user" do
 
-    {:ok, conn: conn, user: user}
+    setup %{conn: conn, login_as: username} do
+      user = user_fixture(username: username)
+      conn = assign(conn, :current_user, user)
+
+      {:ok, conn: conn, user: user}
+    end
+
+    @tag login_as: "max"
+    test "lists all user's videos on index", %{conn: conn, user: user} do
+      user_video  = video_fixture(user, title: "funny cats")
+      other_video = video_fixture(
+        user_fixture(username: "other"),
+        title: "another video")
+
+      conn = get conn, Routes.video_path(conn, :index)
+      response = html_response(conn, 200)
+      # IO.inspect response
+      assert response =~ ~r/Listing Videos/
+      assert response =~ user_video.title # 自分が登録したビデオは含まれる ( =~ は文字を含むかのチェック)
+      refute response =~ other_video.title # 他人が登録したビデオは含まれない
+    end
   end
-  
+
+  # ログインしないテスト。すべてのアクセスが失敗し、どこかへリダイレクト(302)される
   test "requires user authentication on all actions", %{conn: conn} do
     Enum.each([
       get(conn, Routes.video_path(conn, :new)),
