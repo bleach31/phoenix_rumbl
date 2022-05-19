@@ -32,6 +32,48 @@ defmodule RumblWeb.VideoControllerTest do
       assert response =~ user_video.title # 自分が登録したビデオは含まれる ( =~ は文字を含むかのチェック)
       refute response =~ other_video.title # 他人が登録したビデオは含まれない
     end
+
+
+    alias Rumbl.Multimedia
+
+    @create_attrs %{
+      url: "http://youtu.be",
+      title: "vid",
+      description: "a vid"}
+    # 渡すべきアイテムが不足しているやつ
+    @invalid_attrs %{title: "invalid"}
+
+    defp video_count, do: Enum.count(Multimedia.list_videos())
+
+    @tag login_as: "max"
+    test "creates user video and redirects", %{conn: conn, user: user} do
+      #IO.inspect conn
+
+      # ビデオを登録してる
+      create_conn =
+        post conn, Routes.video_path(conn, :create), video: @create_attrs
+      #IO.inspect create_conn
+
+      assert %{id: id} = redirected_params(create_conn)
+      assert redirected_to(create_conn) ==
+        Routes.video_path(create_conn, :show, id)
+
+      # ユーザIDを指定してビデオを取得
+      conn = get conn, Routes.video_path(conn, :show, id)
+      assert html_response(conn, 200) =~ "Show Video"
+      assert Multimedia.get_video!(id).user_id == user.id
+    end
+
+    @tag login_as: "max"
+    test "does not create vid, renders errors when invalid", %{conn: conn} do
+      count_before = video_count()
+      conn =
+        post conn, Routes.video_path(conn, :create), video: @invalid_attrs
+
+      assert html_response(conn, 200) =~ "check the errors"
+      assert video_count() == count_before
+    end
+
   end
 
   # ログインしないテスト。すべてのアクセスが失敗し、どこかへリダイレクト(302)される
