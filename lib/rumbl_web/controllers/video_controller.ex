@@ -8,8 +8,8 @@ defmodule RumblWeb.VideoController do
 
   def load_categories(conn, _) do
     # ここでアサインしたアトム？がhtml.eexからアクセスできるようになる
-    # :category555はhtml.eex側では@category555でアクセスできる
-    assign(conn, :categories555, Multimedia.list_alphabetical_categories())
+    # :categoryはhtml.eex側では@categoryでアクセスできる
+    assign(conn, :categories, Multimedia.list_alphabetical_categories())
   end
 
   def action(conn, _) do
