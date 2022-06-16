@@ -3,9 +3,10 @@
   <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, shrink-to-fit=no, user-scalable=no"/>
     <title>Rumbl · Phoenix Framework</title>
-    <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
+    <link rel="stylesheet" href="<%= Routes.static_url(@conn, "/css/app.css") %>"/>
+    <script defer type="text/javascript" src="<%= Routes.static_url(@conn, "/js/app.js") %>"></script>
   </head>
   <body>
     <header>
@@ -14,6 +15,7 @@
           <ul>
             <%= if @current_user do %>
               <li><%= @current_user.username %></li>
+              <li><%= link "My Videos", to: Routes.video_path(@conn, :index) %></li>
               <li>
                 <%= link "Log out",
                       to: Routes.session_path(@conn, :delete, @current_user),
@@ -26,7 +28,7 @@
           </ul>
         </nav>
         <a href="http://phoenixframework.org/" class="phx-logo">
-          <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>" alt="Phoenix Framework Logo"/>
+          <img src="<%= Routes.static_url(@conn, "/images/phoenix.png") %>" alt="Phoenix Framework Logo"/>
         </a>
       </section>
     </header>
@@ -35,6 +37,5 @@
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
       <%= render @view_module, @view_template, assigns %>
     </main>
-    <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>
