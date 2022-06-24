@@ -1,5 +1,13 @@
+/***
+ * Excerpted from "Programming Phoenix 1.4",
+ * published by The Pragmatic Bookshelf.
+ * Copyrights apply to this code. It may not be used to create training material,
+ * courses, books, articles, and the like. Contact us if you are in doubt.
+ * We make no guarantees that this code is fit for any purpose.
+ * Visit http://www.pragmaticprogrammer.com/titles/phoenix14 for more book information.
+***/
 // We need to import the CSS so that webpack will load it.
-// The MiniCssExtractPlugin is used to separate it out into
+// The ExtractTextPlugin is used to separate it out into
 // its own CSS file.
 import css from "../css/app.css"
 
@@ -15,3 +23,12 @@ import "phoenix_html"
 //
 // Local files can be imported directly using relative paths, for example:
 // import socket from "./socket"
+
+import Player from "./player"
+let video = document.getElementById("video")
+
+if(video) {
+  Player.init(video.id, video.getAttribute("data-player-id"), () => {
+    console.log("player ready!")
+  })
+}
