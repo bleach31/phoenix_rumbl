@@ -7,6 +7,7 @@
  * Visit http://www.pragmaticprogrammer.com/titles/phoenix14 for more book information.
 ***/
 import Player from "./player"
+import {Presence} from "phoenix"
 
 let Video = {
 
@@ -23,9 +24,19 @@ let Video = {
     let msgContainer = document.getElementById("msg-container")
     let msgInput     = document.getElementById("msg-input")
     let postButton   = document.getElementById("msg-submit")
-    let lastSeenId = 0
-    let vidChannel   = socket.channel("videos:" + videoId, ()=>{
+    let userList     = document.getElementById("user-list") 
+    let lastSeenId   = 0
+    let vidChannel   = socket.channel("videos:" + videoId, () => {
       return {last_seen_id: lastSeenId}
+    })
+
+    let presence = new Presence(vidChannel)  
+
+    presence.onSync(() => { 
+      userList.innerHTML = presence.list((id, {metas: [first, ...rest]}) => {
+        let count = rest.length + 1
+        return `<li>${id}: (${count})</li>`
+      }).join("")
     })
 
     postButton.addEventListener("click", e => {
@@ -51,8 +62,8 @@ let Video = {
 
     vidChannel.join()
       .receive("ok", resp => {
-        let ids = resp.annotations.map(ann=>ann.id)
-        if(ids.length > 0){lastSeenId = Math.max(...ids)}
+        let ids = resp.annotations.map(ann => ann.id)
+        if(ids.length > 0){ lastSeenId = Math.max(...ids) }
         this.scheduleMessages(msgContainer, resp.annotations)
       })
       .receive("error", reason => console.log("join failed", reason) )
@@ -82,10 +93,8 @@ let Video = {
   renderAtTime(annotations, seconds, msgContainer){
     return annotations.filter( ann => {
       if(ann.at > seconds){
-        // 表示せず、フィルタでリストに残す
         return true
       } else {
-        // 表示して、フィルタでリストから削除
         this.renderAnnotation(msgContainer, ann)
         return false
       }
