@@ -4,6 +4,7 @@ image:
 vscode:
   extensions:
     - elixir-lsp.elixir-ls
+    - mhutchie.git-graph
 
 ports:
   - port: 4000-4010
