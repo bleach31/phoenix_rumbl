@@ -35,7 +35,9 @@ RUN sudo apt-get update && \
 
 
 # install x windows system
-RUN sudo apt install -y xfce4 xfce4-goodies
+
+RUN apt-get update \
+    && apt install -y xfce4 xfce4-goodies \
 
 RUN echo "Xvfb :0 -screen 0 1920x1080x32 &" >> ~/.bashrc
 RUN echo "startxfce4 &" >> ~/.bashrc
