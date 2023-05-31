@@ -20,7 +20,7 @@ RUN git clone https://github.com/novnc/noVNC.git /opt/novnc \
 # tasks from a Dockerfile. This workaround checks, on each bashrc eval, if the X
 # server is running on screen 0, and if not starts Xvfb, x11vnc and novnc.
 # RUN echo "[ ! -e /tmp/.X0-lock ] && (/usr/bin/start-vnc-session.sh 0 &> /tmp/display-0.log)" >> ~/.bashrc
-RUN echo "export DISPLAY=:0" >> ~/.bashrc
+# RUN echo "export DISPLAY=:0" >> ~/.bashrc
 
 ### checks ###
 # no root-owned files in the home directory
@@ -39,7 +39,3 @@ RUN sudo apt-get update && \
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y xfce4 xfce4-goodies
 
-RUN echo "Xvfb :0 -screen 0 1920x1080x32 &" >> ~/.bashrc
-RUN echo "startxfce4 &" >> ~/.bashrc
-RUN echo "x11vnc -display :0 &" >> ~/.bashrc
-RUN echo "/opt/novnc/utils/novnc_proxy  --vnc localhost:5900 &" >> ~/.bashrc
