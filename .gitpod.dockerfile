@@ -20,7 +20,7 @@ RUN git clone https://github.com/novnc/noVNC.git /opt/novnc \
 # tasks from a Dockerfile. This workaround checks, on each bashrc eval, if the X
 # server is running on screen 0, and if not starts Xvfb, x11vnc and novnc.
 # RUN echo "[ ! -e /tmp/.X0-lock ] && (/usr/bin/start-vnc-session.sh 0 &> /tmp/display-0.log)" >> ~/.bashrc
-# RUN echo "export DISPLAY=:0" >> ~/.bashrc
+RUN echo "export DISPLAY=:1" >> ~/.bashrc
 
 ### checks ###
 # no root-owned files in the home directory

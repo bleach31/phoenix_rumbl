@@ -14,11 +14,14 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 
 ## virtual display
 
+export DISPLAY=:1
+が必要だけど、bashrcに記載済み。
+
 ```
-sudo Xvfb :1 -screen 0 1920x1080x24+32 &
+sudo Xvfb :1 -screen 0 1920x1080x24 &
 sudo startxfce4 &
 sudo x11vnc -display :1 &
-sudo  /opt/novnc/utils/novnc_proxy  --vnc localhost:5900 &
+sudo /opt/novnc/utils/novnc_proxy  --vnc localhost:5900 &
 ```
 
 6080ポートで待機しているnovncを開いて接続する。
@@ -26,7 +29,14 @@ sudo  /opt/novnc/utils/novnc_proxy  --vnc localhost:5900 &
 メモ
 * xvfb（仮想ディスプレイ）、startxce4(デスクトップ環境)、x11vnc(VNCサーバ)、novnc(VNCクライアント)の順で起動する
 * DISPLYを0番ではなく1番にするとうまくいった。（おそらくstartxfce4のデフォルト番号、これを変えれば0でもOKなはずだけど、手間なので1が楽）
-
+* xvfbの起動に失敗するとき
+  ```
+  sudo rm /tmp/.X11-unix/X1
+  sudo rm /tmp/.X1
+  sudo rm /tmp/.X1-lock
+  ```
+  ps aux | grep -i xvfb
+  でxvfbの残りを殺す
 
 ## Learn more
 
