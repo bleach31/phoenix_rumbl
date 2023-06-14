@@ -19,9 +19,9 @@ export DISPLAY=:1
 
 ```
 sudo Xvfb :1 -screen 0 1920x1080x24 &
-sudo startxfce4 &
-sudo x11vnc -display :1 &
-sudo /opt/novnc/utils/novnc_proxy  --vnc localhost:5900 &
+startxfce4 &
+x11vnc -display :1 &
+/opt/novnc/utils/novnc_proxy  --vnc localhost:5900 &
 ```
 
 6080ポートで待機しているnovncを開いて接続する。
